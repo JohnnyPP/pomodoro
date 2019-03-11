@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -24,24 +25,17 @@ namespace Pomodoro
     public sealed partial class MainPage : Page
     {
 
-        private Timer timer;
-
         public MainPage()
         {
             this.InitializeComponent();
-            timer = new Timer(TimerCallback, null, (int)TimeSpan.FromMinutes(1).TotalMilliseconds, Timeout.Infinite);
 
         }
 
-        private async void TimerCallback(object state)
+        ThreadPoolTimer timer = ThreadPoolTimer.CreatePeriodicTimer((t) =>
         {
-            // do some work not connected with UI
-
-            await Window.Current.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
-                () => {
-            // do some work on UI here;
-                        });
-        }
-       
+            //do some work \ dispatch to UI thread as needed
+            int i = 0;
+            i++;
+        }, TimeSpan.FromSeconds(10));
     }
 }
