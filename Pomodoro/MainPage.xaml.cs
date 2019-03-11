@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,9 +23,25 @@ namespace Pomodoro
     /// </summary>
     public sealed partial class MainPage : Page
     {
+
+        private Timer timer;
+
         public MainPage()
         {
             this.InitializeComponent();
+            timer = new Timer(TimerCallback, null, (int)TimeSpan.FromMinutes(1).TotalMilliseconds, Timeout.Infinite);
+
         }
+
+        private async void TimerCallback(object state)
+        {
+            // do some work not connected with UI
+
+            await Window.Current.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+                () => {
+            // do some work on UI here;
+                        });
+        }
+       
     }
 }
