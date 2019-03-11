@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using Windows.Foundation;
@@ -24,18 +26,12 @@ namespace Pomodoro
     /// </summary>
     public sealed partial class MainPage : Page
     {
-
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
+            var viewModel = new ViewModel.ViewModel();
+            DataContext = viewModel;
         }
-
-        ThreadPoolTimer timer = ThreadPoolTimer.CreatePeriodicTimer((t) =>
-        {
-            //do some work \ dispatch to UI thread as needed
-            int i = 0;
-            i++;
-        }, TimeSpan.FromSeconds(10));
     }
 }
