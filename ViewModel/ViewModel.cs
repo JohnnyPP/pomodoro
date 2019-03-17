@@ -28,6 +28,7 @@ namespace ViewModel
              CoreDispatcherPriority.Normal, () =>
              {
                 // Your UI update code goes here!
+                // working prototype
                 DateTime datetime = DateTime.Now;
                 TimerTextBlock = datetime.ToString();
              });
